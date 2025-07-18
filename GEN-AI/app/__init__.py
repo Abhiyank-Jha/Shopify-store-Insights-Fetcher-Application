@@ -1,0 +1,1 @@
+# Shopify Store Insights Fetcher Application 

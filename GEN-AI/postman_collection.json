@@ -1,0 +1,196 @@
+{
+    "info": {
+        "name": "Shopify Store Insights Fetcher API",
+        "description": "A comprehensive API for extracting insights from Shopify stores without using the official Shopify API.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "version": "1.0.0"
+    },
+    "item": [
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/health",
+                    "host": ["{{base_url}}"],
+                    "path": ["health"]
+                },
+                "description": "Check if the API is running and healthy"
+            },
+            "response": []
+        },
+        {
+            "name": "API Information",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/",
+                    "host": ["{{base_url}}"],
+                    "path": [""]
+                },
+                "description": "Get API information and available endpoints"
+            },
+            "response": []
+        },
+        {
+            "name": "Get Store Insights",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"website_url\": \"https://example-store.com\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/store-insights",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "store-insights"]
+                },
+                "description": "Extract comprehensive insights from a Shopify store including products, policies, FAQs, social media, and contact information"
+            },
+            "response": []
+        },
+        {
+            "name": "Get Store Insights - Real Example",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"website_url\": \"https://memy.co.in\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/store-insights",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "store-insights"]
+                },
+                "description": "Extract insights from a real Shopify store (memy.co.in)"
+            },
+            "response": []
+        },
+        {
+            "name": "Competitor Analysis",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"website_url\": \"https://example-store.com\",\n    \"max_competitors\": 5\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/competitor-analysis",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "competitor-analysis"]
+                },
+                "description": "Find and analyze competitors of a given brand"
+            },
+            "response": []
+        },
+        {
+            "name": "Get Cached Store Insights",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/store-insights/{{store_url}}",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "store-insights", "{{store_url}}"]
+                },
+                "description": "Retrieve cached store insights from the database"
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Cached Store Insights",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/store-insights",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "store-insights"]
+                },
+                "description": "Get all cached store insights from the database"
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Store Insights",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/store-insights/{{store_url}}",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "store-insights", "{{store_url}}"]
+                },
+                "description": "Delete cached store insights from the database"
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "description": "Base URL for the API"
+        },
+        {
+            "key": "store_url",
+            "value": "https://example-store.com",
+            "description": "Example store URL for testing"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// Add timestamp to requests for debugging",
+                    "pm.request.headers.add({",
+                    "    key: 'X-Request-Timestamp',",
+                    "    value: new Date().toISOString()",
+                    "});"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// Basic response validation",
+                    "pm.test('Status code is 200 or 201', function () {",
+                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                    "});",
+                    "",
+                    "pm.test('Response has required fields', function () {",
+                    "    const response = pm.response.json();",
+                    "    if (response.success !== undefined) {",
+                    "        pm.expect(response).to.have.property('success');",
+                    "        pm.expect(response).to.have.property('message');",
+                    "    }",
+                    "});"
+                ]
+            }
+        }
+    ]
+} 
