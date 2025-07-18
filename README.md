@@ -52,3 +52,14 @@ curl -X POST "http://localhost:8000/api/v1/store-insights" \
   -H "Content-Type: application/json" \
   -d '{"website_url": "https://example-store.com"}'
 ``` 
+API
+http://localhost:8000/api/v1/store-insights 
+
+{"website_url": "https://memy.co.in"}
+
+http://localhost:8000/api/v1/competitor-analysis 
+
+{
+    "website_url":"https://memy.co.in/",
+    "max_competitors":3
+}
